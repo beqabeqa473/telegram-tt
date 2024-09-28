@@ -127,10 +127,10 @@ const Archive: FC<OwnProps> = ({
         <div className={buildClassName(styles.info, 'info')}>
           <div className="info-row">
             <div className={buildClassName('title', styles.title)}>
-              <h3 dir="auto" className={buildClassName(styles.name, 'fullName')}>{lang('ArchivedChats')}</h3>
+              <h3 dir="auto" role="presentation" className={buildClassName(styles.name, 'fullName')}>{lang('ArchivedChats')}</h3>
             </div>
           </div>
-          <div className="subtitle">
+          <div className="subtitle" aria-hidden="true">
             <div className={buildClassName('status', styles.chatsPreview)}>
               {previewItems}
             </div>

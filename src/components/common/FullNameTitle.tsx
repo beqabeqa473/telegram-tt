@@ -112,7 +112,6 @@ const FullNameTitle: FC<OwnProps> = ({
     <div className={buildClassName('title', styles.root, className)}>
       <h3
         dir="auto"
-        role="button"
         className={buildClassName(
           'fullName',
           styles.fullName,

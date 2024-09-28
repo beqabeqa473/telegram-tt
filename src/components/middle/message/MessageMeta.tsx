@@ -116,8 +116,22 @@ const MessageMeta: FC<OwnProps> = ({
     message.forwardInfo?.isImported && 'is-imported',
   );
 
+function getAccessibleName() {
+let text = "";
+const messageTime = formatTime(lang, message.date * 1000);
+const messageSent = lang('AccDescrSentDate', lang('TodayAtFormatted', messageTime));
+const messageReceived= lang('AccDescrReceivedDate', lang('TodayAtFormatted', messageTime));
+const direction = message.isOutgoing ? messageSent : messageReceived;
+text += `${direction}`
+if (message.isOutgoing) {
+text += `, ${outgoingStatus}`;
+}
+return text;
+}
+
   return (
-    <span
+    <div aria-label={getAccessibleName()}>
+    <span aria-hidden="true"
       className={fullClassName}
       dir={lang.isRtl ? 'rtl' : 'ltr'}
       onClick={onClick}
@@ -170,6 +184,7 @@ const MessageMeta: FC<OwnProps> = ({
       )}
       {renderQuickReactionButton && renderQuickReactionButton()}
     </span>
+    </div>
   );
 };
 

@@ -129,7 +129,7 @@ const MessageListContent: FC<OwnProps> = ({
   const lang = useOldLang();
 
   const unreadDivider = (
-    <div className={buildClassName(UNREAD_DIVIDER_CLASS, 'local-action-message')} key="unread-messages">
+    <div className={buildClassName(UNREAD_DIVIDER_CLASS, 'local-action-message')} key="unread-messages" role="heading" aria-level="5">
       <span>{lang('UnreadMessages')}</span>
     </div>
   );
@@ -275,6 +275,8 @@ const MessageListContent: FC<OwnProps> = ({
           key="date-header"
           onMouseDown={preventMessageInputBlur}
           onClick={areDatesClickable ? () => openHistoryCalendar({ selectedAt: dateGroup.datetime }) : undefined}
+        role="heading"
+        aria-level="4"
         >
           <span dir="auto">
             {isSchedule && dateGroup.originalDate === SCHEDULED_WHEN_ONLINE && (

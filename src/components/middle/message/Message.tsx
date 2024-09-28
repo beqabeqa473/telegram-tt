@@ -991,6 +991,7 @@ const Message: FC<OwnProps & StateProps> = ({
         className={buildClassName('quick-reaction', isQuickReactionVisible && !hasActiveReactions && 'visible')}
         onClick={handleSendQuickReaction}
         ref={quickReactionRef}
+        aria-hidden="true"
       >
         <ReactionStaticEmoji
           reaction={defaultReaction}
@@ -1536,6 +1537,7 @@ const Message: FC<OwnProps & StateProps> = ({
   return (
     <div
       ref={ref}
+      role="listitem"
       id={getMessageHtmlId(message.id)}
       className={containerClassName}
       data-message-id={messageId}

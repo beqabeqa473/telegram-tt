@@ -79,6 +79,7 @@ const TabList: FC<OwnProps> = ({
       className={buildClassName('TabList', 'no-scrollbar', className)}
       ref={containerRef}
       dir={lang.isRtl ? 'rtl' : undefined}
+      role="tablist"
     >
       {tabs.map((tab, i) => (
         <Tab

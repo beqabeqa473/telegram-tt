@@ -1,5 +1,6 @@
 import type { FC } from '../../../lib/teact/teact';
 import React, { memo, useEffect, useMemo } from '../../../lib/teact/teact';
+import { formatPastTimeShort } from '../../../util/dates/dateFormat';
 import { getActions, withGlobal } from '../../../global';
 
 import type {
@@ -20,10 +21,13 @@ import { StoryViewerOrigin } from '../../../types';
 
 import {
   getMessageAction,
+  getChatTitle,
+  getUserFirstOrLastName, getUserFullName,
   getPrivateChatUserId,
   isUserId,
   isUserOnline,
   selectIsChatMuted,
+  getMessageText,
 } from '../../../global/helpers';
 import { getMessageReplyInfo } from '../../../global/helpers/replies';
 import {
@@ -60,6 +64,7 @@ import { useIsIntersecting } from '../../../hooks/useIntersectionObserver';
 import useLastCallback from '../../../hooks/useLastCallback';
 import useShowTransitionDeprecated from '../../../hooks/useShowTransitionDeprecated';
 import useChatListEntry from './hooks/useChatListEntry';
+import useOldLang from '../../../hooks/useOldLang';
 
 import Avatar from '../../common/Avatar';
 import DeleteChatModal from '../../common/DeleteChatModal';
@@ -299,6 +304,7 @@ const Chat: FC<OwnProps & StateProps> = ({
 
   const isOnline = user && userStatus && isUserOnline(user, userStatus);
   const { hasShownClass: isAvatarOnlineShown } = useShowTransitionDeprecated(isOnline);
+  const lang = useOldLang();
 
   const href = useMemo(() => {
     if (!IS_OPEN_IN_NEW_TAB_SUPPORTED) return undefined;
@@ -313,6 +319,37 @@ const Chat: FC<OwnProps & StateProps> = ({
   if (!chat) {
     return undefined;
   }
+
+function getAccessibleName() {
+const peer = user || chat;
+  const isUser = isUserId(peer.id);
+  const title = isUser ? getUserFullName(peer as ApiUser) : getChatTitle(lang, peer as ApiChat);
+            const isSavedMessages=user?.isSelf;
+let name = "";
+if (isSavedMessages) {
+name += `${lang('SavedMessages')}`;
+} else {
+name += title;
+}
+if (chat.type === 'chatTypeBasicGroup' || chat.type === 'chatTypeSuperGroup') {
+name += `, ${lang('AccDescrGroup')}`
+} else if (chat.type === 'chatTypeChannel') {
+name += `, ${lang('AccDescrChannel')}`
+} else if (user.type === 'userTypeBot') {
+name += `, ${lang('Bot')}`;
+}
+if (chat.unreadCount > 0) {
+name += `, ${chat.unreadCount} new messages`
+}
+if (chat.type !== 'chatTypePrivate' && chat.type !== 'chatTypeChannel') {
+name += !!lastMessageSender?.isSelf ? `, ${lang('FromYou')}` : `, ${getUserFirstOrLastName(lastMessageSender)}`;
+}
+if (getMessageText(lastMessage)) {
+name += `, ${getMessageText(lastMessage)}`
+}
+name += `, ${lastMessage.isOutgoing ? lang('AccDescrSentDate', lang('TodayAtFormatted', formatPastTimeShort(lang, lastMessage.date * 1000))) : lang('AccDescrReceivedDate',  lang('TodayAtFormatted', formatPastTimeShort(lang, lastMessage.date * 1000)))}`
+return name;
+}
 
   const peer = user || chat;
 
@@ -331,6 +368,7 @@ const Chat: FC<OwnProps & StateProps> = ({
       ref={ref}
       className={chatClassName}
       href={href}
+      ariaLabel={getAccessibleName()}
       style={`top: ${offsetTop}px`}
       ripple={!isForum && !isMobile}
       contextActions={contextActions}

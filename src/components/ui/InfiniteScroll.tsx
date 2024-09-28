@@ -241,6 +241,8 @@ const InfiniteScroll: FC<OwnProps> = ({
     <div
       ref={containerRef}
       className={className}
+      role={className === "chat-list custom-scroll" ? "region" : undefined}
+      aria-label={className === "chat-list custom-scroll" ? "Chats navigation" : undefined}
       onScroll={handleScroll}
       onWheel={onWheel}
       teactFastList={!noFastList && !withAbsolutePositioning}
@@ -255,6 +257,7 @@ const InfiniteScroll: FC<OwnProps> = ({
         <div
           teactFastList={!noFastList}
           style={buildStyle('position: relative', IS_ANDROID && `height: ${maxHeight}px`)}
+          role="list"
         >
           {children}
         </div>

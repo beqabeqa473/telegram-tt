@@ -154,6 +154,20 @@ const LeftMainHeader: FC<OwnProps & StateProps> = ({
   } : undefined), [canSetPasscode]));
 
   const MainButton: FC<{ onTrigger: () => void; isOpen?: boolean }> = useMemo(() => {
+  const getAccessibleMenuTitle = (isOpen) => {
+let title;
+if (hasMenu) {
+if (isOpen) {
+title =  lang('AccDescrCloseMenu');
+} else {
+title =  lang('AccDescrOpenMenu2');
+}
+} else {
+title =  'Return to chat list';
+}
+return title;
+};
+
     return ({ onTrigger, isOpen }) => (
       <Button
         round
@@ -163,7 +177,7 @@ const LeftMainHeader: FC<OwnProps & StateProps> = ({
         className={isOpen ? 'active' : ''}
         // eslint-disable-next-line react/jsx-no-bind
         onClick={hasMenu ? onTrigger : () => onReset()}
-        ariaLabel={hasMenu ? oldLang('AccDescrOpenMenu2') : 'Return to chat list'}
+        ariaLabel={getAccessibleMenuTitle(isOpen)}
       >
         <div className={buildClassName(
           'animated-menu-icon',

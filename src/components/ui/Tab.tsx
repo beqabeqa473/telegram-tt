@@ -135,6 +135,8 @@ const Tab: FC<OwnProps> = ({
       className={buildClassName('Tab', onClick && 'Tab--interactive', className)}
       onClick={handleClick}
       onMouseDown={handleMouseDown}
+      role="tab"
+      aria-selected={isActive}
       onContextMenu={handleContextMenu}
       ref={tabRef}
     >

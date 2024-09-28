@@ -107,7 +107,7 @@ const ChatBadge: FC<OwnProps> = ({
 
     const pinnedElement = isPinned && (
       <div className={className}>
-        <i className="icon icon-pinned-chat" />
+        <i className="icon icon-pinned-chat" aria-label="Pinned" />
       </div>
     );
 

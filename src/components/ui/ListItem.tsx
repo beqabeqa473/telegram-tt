@@ -51,6 +51,7 @@ interface OwnProps {
   rightElement?: TeactNode;
   buttonClassName?: string;
   className?: string;
+  ariaLabel?: string;
   style?: string;
   children: React.ReactNode;
   disabled?: boolean;
@@ -88,6 +89,7 @@ const ListItem: FC<OwnProps> = ({
   secondaryIconClassName,
   rightElement,
   className,
+  ariaLabel,
   style,
   children,
   disabled,
@@ -222,10 +224,12 @@ const ListItem: FC<OwnProps> = ({
       style={style}
       onMouseDown={onMouseDown}
       onDragEnter={onDragEnter}
+      role="listitem"
     >
       <ButtonElementTag
         className={buildClassName('ListItem-button', isTouched && 'active', buttonClassName)}
-        role={!isStatic ? 'button' : undefined}
+        role={!isStatic ? 'link' : undefined}
+        ariaLabel={ariaLabel}
         href={href}
         ref={buttonRef as any /* TS requires specific types for refs */}
         tabIndex={!isStatic ? 0 : undefined}

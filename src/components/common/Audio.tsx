@@ -465,6 +465,7 @@ const Audio: FC<OwnProps> = ({
       {origin === AudioOrigin.SharedMedia && (voice || video) && renderWithTitle()}
       {(origin === AudioOrigin.Inline || isInOneTimeModal) && voice && (
         renderVoice(
+          lang,
           voice,
           seekerRef,
           waveformCanvasRef,
@@ -553,6 +554,7 @@ function renderAudio(
 }
 
 function renderVoice(
+  lang: LangFn,
   voice: ApiVoice,
   seekerRef: React.Ref<HTMLDivElement>,
   waveformCanvasRef: React.Ref<HTMLCanvasElement>,
@@ -585,6 +587,7 @@ function renderVoice(
               onClickTranscribe();
             }
           }}
+ariaLabel={((isTranscribed || isTranscriptionError) && !isTranscriptionHidden) ? lang('AccActionCloseTranscription') : lang('AccActionOpenTranscription')}
           >
             <i className={buildClassName(
               'transcribe-icon',

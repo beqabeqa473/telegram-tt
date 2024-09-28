@@ -121,7 +121,7 @@ const MenuItem: FC<MenuItemProps> = (props) => {
 
   return (
     <div
-      role="menuitem"
+      role="button"
       tabIndex={0}
       className={fullClassName}
       onClick={handleClick}

@@ -197,7 +197,7 @@ const AudioPlayer: FC<OwnProps & StateProps> = ({
           ariaLabel="Playback Rate"
           ripple={!isMobile}
           onMouseEnter={handleContextMenu}
-          onClick={handlePlaybackClick}
+          onClick={handleContextMenu}
           onMouseDown={handleBeforeContextMenu}
           onContextMenu={handleContextMenu}
         >
@@ -269,28 +269,12 @@ const AudioPlayer: FC<OwnProps & StateProps> = ({
         <i className="icon icon-skip-next" />
       </Button>
 
-      <div className="volume-button-wrapper">
-        <Button
-          round
-          className="player-button volume-button"
-          color="translucent"
-          size="smaller"
-          ariaLabel="Volume"
-          onClick={handleVolumeClick}
-          ripple={!isMobile}
-        >
-          <i className={buildClassName('icon', volumeIcon)} />
-        </Button>
-
-        {!IS_IOS && (
-          <div className="volume-slider-wrapper">
-            <div className="volume-slider-spacer" />
+      <div className="volume-slider-wrapper">
+        <div className="volume-slider-spacer" />
             <div className="volume-slider">
               <RangeSlider bold value={isMuted ? 0 : volume * 100} onChange={handleVolumeChange} />
             </div>
           </div>
-        )}
-      </div>
 
       {shouldRenderPlaybackButton && (
         <DropdownMenu
