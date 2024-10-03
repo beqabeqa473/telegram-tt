@@ -131,7 +131,7 @@ return text;
 
   return (
     <div aria-label={getAccessibleName()}>
-    <span aria-hidden="true"
+    <span
       className={fullClassName}
       dir={lang.isRtl ? 'rtl' : 'ltr'}
       onClick={onClick}
@@ -167,7 +167,7 @@ return text;
       {signature && (
         <span className="message-signature">{renderText(signature)}</span>
       )}
-      <span className="message-time" title={title} onMouseEnter={markActivated}>
+      <span className="message-time" aria-hidden="true" title={title} onMouseEnter={markActivated}>
         {message.forwardInfo?.isImported && (
           <>
             <span className="message-imported" onClick={handleImportedClick}>
